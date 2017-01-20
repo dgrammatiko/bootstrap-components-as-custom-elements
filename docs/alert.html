@@ -1,0 +1,70 @@
+<element name="bsasce-alert">
+	<script>
+		(function () {
+
+			var ElementPrototype = Object.create(HTMLElement.prototype);
+
+			// Lifecycle methods
+			ElementPrototype.createdCallback = function () {
+//				var elelel = document.createElement('p');
+//				elelel.innerHTML = 'works';
+//				this.appendChild(elelel);
+			};
+
+			ElementPrototype.attachedCallback = function () {
+				// Is there a close button?
+				var closeButton = this.querySelector('button');
+
+				if (closeButton) {
+					closeButton.addEventListener('click', function(event) {
+						this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);
+					})
+				}
+			};
+
+			ElementPrototype.detachedCallback = function () {
+
+			};
+
+			ElementPrototype.attributeChangedCallback = function (attr, oldVal, newVal) {
+				if (attr in attrs) {
+					attrs[attr].call(this, oldVal, newVal);
+				}
+			};
+
+			// Custom methods
+
+			ElementPrototype.foo = function () {
+
+			};
+
+			// Attribute handlers
+
+			var attrs = {
+				'attr': function (oldVal, newVal) {
+
+				}
+			};
+
+			// Property handlers
+
+			Object.defineProperties(ElementPrototype, {
+				'prop': {
+					get : function () {
+
+					},
+					set : function (newVal) {
+
+					}
+				}
+			});
+
+			// Register the element
+
+			window.CustomElement = document.registerElement('bsasce-alert', {
+				prototype: ElementPrototype
+			});
+
+		})();
+	</script>
+</element>

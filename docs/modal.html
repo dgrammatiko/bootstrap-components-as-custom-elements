@@ -1,0 +1,97 @@
+<element name="bsasce-alert">
+	<script>
+		(function () {
+
+			var ElementPrototype = Object.create(HTMLElement.prototype);
+
+			// Lifecycle methods
+			ElementPrototype.createdCallback = function () {
+
+			};
+
+			ElementPrototype.attachedCallback = function () {
+				var modal = this.querySelector('.modal');
+				triggerBtn = document.querySelector("button[data-target=\"#" + modal.id + "\"]");
+				triggerBtn.addEventListener('click', function(ev) {
+					var dropShadow = document.createElement('div');
+					dropShadow.classList.add('modal-backdrop', 'in');
+					document.body.appendChild(dropShadow);
+					modal.classList.add('in');
+					modal.classList.remove('fade');
+					modal.style.display = 'block';
+
+					dropShadow.addEventListener('click', function(e){
+						console.log('fired')
+						console.log(e.target)
+						document.body.removeChild(e.target);
+						modal.classList.add('fade');
+						modal.classList.remove('in');
+						modal.style.display = 'none';
+					});
+				})
+
+				// Is there a close button?
+				var modalButton = modal.querySelectorAll('button[data-dismiss="modal"]');
+
+				for (var i = 0, l = modalButton.length; i < l; i++) {
+					// close
+					modalButton[i].addEventListener('click', function(event) {
+						close();
+					});
+				}
+
+				var close = function() {
+					var dropShadow = document.querySelector('.modal-backdrop');
+					document.body.removeChild(dropShadow);
+					modal.classList.add('fade');
+					modal.classList.remove('in');
+					modal.style.display = 'none';
+				}
+			};
+
+			ElementPrototype.detachedCallback = function () {
+
+			};
+
+			ElementPrototype.attributeChangedCallback = function (attr, oldVal, newVal) {
+				if (attr in attrs) {
+					attrs[attr].call(this, oldVal, newVal);
+				}
+			};
+
+			// Custom methods
+
+			ElementPrototype.foo = function () {
+
+			};
+
+			// Attribute handlers
+
+			var attrs = {
+				'attr': function (oldVal, newVal) {
+
+				}
+			};
+
+			// Property handlers
+
+			Object.defineProperties(ElementPrototype, {
+				'prop': {
+					get : function () {
+
+					},
+					set : function (newVal) {
+
+					}
+				}
+			});
+
+			// Register the element
+
+			window.CustomElement = document.registerElement('bsasce-modal', {
+				prototype: ElementPrototype
+			});
+
+		})();
+	</script>
+</element>
